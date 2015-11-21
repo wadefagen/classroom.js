@@ -1,0 +1,17 @@
+{
+  "name": "classroom.js",
+  "version": "0.1.0",
+
+  "description": "Open-source HTML5 presentations designed for interactive classrooms",
+  "homepage": "https://github.com/wadefagen/classroom.js",
+
+  "main": "js/classroom.js",
+  "author": "Wade Fagen <waf@illinois.edu>",
+
+  "repostitory": {
+    "type": "git",
+    "url": "https://github.com/wadefagen/classroom.js"
+  },
+
+  "license": "MIT"
+}

@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>classroom.js - HTML5-based presentation framework for classrooms using reveal.js and paper.js</title>
+		<meta name="description" content="HTML5-based presentation framework for classrooms using reveal.js and paper.js">
+
+		<!-- reveal.js -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="mobile-web-app-capable" content="yes">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="lib/revealjs/css/reveal.css">
+		<link rel="stylesheet" href="lib/revealjs/css/theme/black.css" id="theme">
+
+		<script src="lib/revealjs/lib/js/head.min.js"></script>
+		<script src="lib/revealjs/js/reveal.js"></script>
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/revealjs/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'lib/revealjs/css/print/pdf.css' : 'lib/revealjs/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+    <!-- /reveal.js -->
+
+
+		<!-- paper.js -->
+		<script src="lib/paperjs/paper-core.js"></script>
+
+		<script>
+		var pathStrokeColor = 'green';
+		var pathStrokeWidth = 2;
+
+		function pencolor(color) {
+			pathStrokeColor = color;
+			console.log("pathStrokeColor: " + color);
+		}
+
+		function pentoggle() {
+			var canvas = paper.view.element;
+			if (canvas.style.pointerEvents == "none") {
+				canvas.style.pointerEvents = "auto"
+			} else {
+				canvas.style.pointerEvents = "none";
+			}
+
+		}
+		</script>
+		<!-- /paper.js -->
+	</head>
+
+	<body>
+		<style>
+		h1.huge { font-size: 25vh; }
+
+		section canvas {
+			position: absolute;
+			top: 0;
+			left: 0;
+
+			width: 960px;
+			height: 700px;
+			z-index: 10;
+			pointer-events: auto;
+		}
+
+		.content {
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+
+		div.slides {
+			border: solid 1px white;
+		}
+
+		div.pen-controls {
+			z-index: 20;
+			float: left;
+			margin-top: 20px;
+			border-width: 1px 1px 1px 0px;
+			border-color: white;
+			border-style: solid;
+			border-top-right-radius: 5px;
+			border-bottom-right-radius: 5px;
+			width: 40px;
+			position: absolute;
+		}
+
+		div.pen-controls > .header {
+			font-size: 12px;
+			border-bottom: 1px solid white;
+			color: white;
+			text-align: center;
+			padding: 5px 0px;
+			cursor: pointer;
+		}
+
+		.pen-controls .color-select {
+			width: 30px;
+			height: 30px;
+			margin: 5px;
+			cursor: pointer;
+		}
+
+		.pen-controls .pen-red  { background-color: red; }
+		.pen-controls .pen-yellow  { background-color: yellow; }
+		.pen-controls .pen-blue  { background-color: blue; }
+		.pen-controls .pen-green  { background-color: green; }
+		.pen-controls .pen-purple  { background-color: purple; }
+		.pen-controls .pen-white  { background-color: white; }
+		</style>
+
+
+
+
+		<div class="pen-controls">
+			<div class="header" onclick="pentoggle()">Toggle Pen</div>
+
+			<div class="color-select pen-red" onclick="pencolor('red');"></div>
+			<div class="color-select pen-yellow" onclick="pencolor('yellow');"></div>
+			<div class="color-select pen-blue" onclick="pencolor('blue');"></div>
+			<div class="color-select pen-green" onclick="pencolor('green');"></div>
+			<div class="color-select pen-purple" onclick="pencolor('purple');"></div>
+			<div class="color-select pen-white" onclick="pencolor('white');"></div>
+		</div>
+
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section class="xl">
+					<h1>CS 105</h1>
+					<a href="http://wadefagen.com/">wadefagen.com</a>
+				</section>
+
+				<section>
+					<video width="640" height="360" controls>
+						<source src="0/intro.mp4" type="video/mp4">
+					</video>
+					<div style="color: #888; font-size: 32px;">Source: code.org</div>
+				</section>
+
+				<section class="xl">
+					<p>
+						<i>
+							The programmers of tomorrow are the wizards of the future.
+							You are going to look like you have magical powers compared to everyone else.
+						</i>
+					</p>
+					<p style="text-align: right;">
+						<small>- Gabe Newell, co-founder of Valve</small>
+					</p>
+				</section>
+
+				<section class="xl">
+					<b>Introduction</b> to Computer Science
+				</section>
+
+				<section name="neverCodedSection" class="xl">
+					<div id="neverCoded" style="height: 500px;"></div>
+					<div>Spring 2014 students had no prior programming experience</div>
+					<script>
+					Reveal.addEventListener('slidechanged', function (e) {
+						if (e.currentSlide.getAttribute("name") == "neverCodedSection") {
+							document.getElementById("neverCoded").innerHTML = "";
+
+							waf_dognutGraph("neverCoded", "orange", 87);
+						}
+					});
+					</script>
+				</section>
+
+				<section name="preparedSection" class="xl">
+					<div id="prepared" style="height: 500px;"></div>
+					<div>...were &quot;less prepared&quot; or &quot;as repared&quot; as their peers for CS 105</div>
+					<script>
+					Reveal.addEventListener('slidechanged', function (e) {
+						if (e.currentSlide.getAttribute("name") == "preparedSection") {
+							document.getElementById("prepared").innerHTML = "";
+
+							waf_dognutGraph("prepared", "aliceblue", 93);
+						}
+					});
+					</script>
+				</section>
+
+				<section>
+				</section>
+
+				<section class="xl">
+					CS @ Illinois
+				</section>
+
+				<section>
+					<h3>Top five CS departments</h3>
+					<p>
+					<ul>
+						<li>Berkeley</li>
+						<li>Carnegie Mellon University</li>
+						<li>Illinois</li>
+						<li>MIT</li>
+						<li>Stanford</li>
+					</ul>
+					</p>
+					<div style="color: #888; font-size: 32px;">Source: US News And World Report (2014)</div>
+				</section>
+
+				<section>
+					<p><i>&quot;I just completed a summer internship with a <span style="color: orange">big-4 accounting firm</span> and, of all the classes I have taken,
+					CS 105 was <span style="color: orange">one of the most helpful ones</span>.</i></p>
+
+					<p><i>Thanks to [CS 105] I always had an <span style="color: orange">edge over all the other interns</span> when it came to presenting or analyzing data to my boss.&quot;</i></p>
+
+					<p style="text-align: right;">
+						<small>- Junior, College of Business</small>
+					</p>
+				</section>
+
+				<section>
+				</section>
+
+				<section class="xl">
+					<p>
+						<b>Wade Fagen, Ph.D.</b><br>
+						<span style="color: #888">(Illinois '13)</span>
+					</p>
+					<p>
+						waf@illinois.edu<br>
+						2215 Siebel Center
+					</p>
+				</section>
+
+				<section class="xl">
+					<p>
+						<b>Wade Fagen, Ph.D.</b>
+					</p>
+					<div class="left" style="float: left; width: 50%;">
+						<img class="fragment" src="0/cisco.png" style="background-color: white">
+						<img class="fragment" src="0/google.png" style="background-color: white">
+					</div>
+					<div class="right" style="float: right; width: 50%;">
+						<img class="fragment" src="0/ms.png">
+					</div>
+				</section>
+
+				<section class="xl">
+					<p>
+						<b>Martin Hellwig</b><br>
+						<span style="color: #888">(Co-Instructor)</span>
+						mhellwig@illinois.edu<br>
+					</p>
+					<hr />
+					<p>
+						<b>Jillian Zwilling</b><br>
+						<span style="color: #888">(Course Coordinator)</span>
+						mhellwig@illinois.edu<br>
+					</p>
+				</section>
+
+
+
+
+
+
+
+				<section>
+					<h3>Teaching Assistants (TA)</h3>
+					<div class="left" style="float: left; width: 50%;">
+						<ul>
+							<li>Avinash Ahuja</li>
+							<li>Ankit Bhardwaj</li>
+							<li>Haoyan Cai</li>
+							<li>Vedhus Hoskere</li>
+							<li>Chinmay Kulkarni</li>
+							<li>Sihan Li</li>
+						</ul>
+					</div>
+					<div class="right" style="float: right; width: 50%;">
+						<ul>
+							<li>Peyman Mahdian</li>
+							<li>Sandeep Murthy</li>
+							<li>Richa Sehgal</li>
+							<li>Yidan Sun</li>
+							<li>Sally Zhang</li>
+							<li>Chi Zhou</li>
+						</ul>
+					</div>
+
+				</section>
+
+				<section>
+					<h3>Course Assistants (CA)</h3>
+				</section>
+
+				<section class="xl">
+					<p class="fragment">Scratch</p>
+					<p class="fragment">JavaScript</p>
+					<p class="fragment">HTML / CSS</p>
+					<p class="fragment">Microsoft Excel</p>
+					<p class="fragment">d3.js</p>
+				</section>
+
+				<section class="xl">
+					<ol>
+						<li class="fragment"><b style="color: orange">Read</b>: Weekly Activities</li>
+						<li class="fragment"><b style="color: orange">See</b>: Lectures</li>
+						<li class="fragment"><b style="color: orange">Practice</b>: Lab Sections</li>
+						<li class="fragment"><b style="color: orange">Do</b>: Machine Problems</li>
+					</ol>
+				</section>
+
+
+				<section>
+					<h2>Weekly Activities</h2>
+				</section>
+
+				<section class="xl">
+					<p style="color: orange"><b>Activity 0</b></p>
+					<p>
+						Available Now<br>
+						Due: Monday by 10:45am
+					</p>
+				</section>
+
+				<section>
+					<h2>Lectures</h2>
+				</section>
+
+				<section>
+					<h2>Labs</h2>
+				</section>
+
+				<section class="xl">
+					<p style="color: orange"><b>Lab 0</b></p>
+					<p>
+						Happening This Week!<br>
+						Attend your lab Wed/Thur/Fri
+					</p>
+				</section>
+
+				<section>
+					<h2>Machine Problems</h2>
+				</section>
+
+				<section>
+					<h2>Final Course Project</h2>
+				</section>
+
+				<section>
+					<h3>Midterm Exam</h3>
+					<p>
+						Monday, October 12, 2015<br>
+						7:30pm - 9:00pm
+					</p>
+					<br>
+					<h3>Final Exam</h3>
+					<p>
+						Thursday, December 17, 2015<br>
+						1:30pm - 4:30pm
+					</p>
+				</section>
+
+
+				<section>
+					<h3>Grading</h3>
+
+					<div style="float: left; width: 50%;">
+						<h4>Exams</h4>
+						<p>
+							Midterm: 150pts<br>
+							Final Exam: 200pts<br>
+						</p>
+						<br>
+						<h4>MP / Project</h4>
+						<p>
+							MPs: 30pts each (x7 = 210)<br>
+							Solo Project: 50pts<br>
+							Final Project: 90pts
+						</p>
+					</div>
+
+					<div style="float: right; width: 50%;">
+						<h4>Weekly Assignments</h4>
+						<p>
+							Lectures: 110pts**<br>
+							Activities: 100pts*<br>
+							Labs: 90pts**
+						</p>
+						<br>
+
+						<h4>Absence Policy</h4>
+						<p>
+							*: Can miss one<br>
+							**: Can miss two<br>
+							without losing points
+						</p>
+					</div>
+				</section>
+
+				<section>
+					<h3>Grading</h3>
+
+					<div style="float: left; width: 50%;">
+						<ul>
+							<li>A+: 970+</li>
+							<li>A: 930-969</li>
+							<li>A-: 900-929</li>
+							<br>
+							<li>B+: 870-899</li>
+							<li>B: 830-869</li>
+							<li>B-: 800-829</li>
+						</ul>
+					</div>
+
+					<div style="float: right; width: 50%;">
+						<ul>
+							<li>C+: 770-799</li>
+							<li>C: 730-769</li>
+							<li>C-: 700-729</li>
+							<br>
+							<li>D+: 670+</li>
+							<li>D: 630-669</li>
+							<li>D-: 600-629</li>
+						</ul>
+					</div>
+				</section>
+
+				<section>
+					<h1>+1 Problems</h1>
+
+					<p>Occasional ways to earn +1 point to your grade, adds up to be at least 25 extra points or more.</p>
+				</section>
+
+				<section>
+					<h2>Piazza</h2>
+					<p>
+						Piazza will be the online discussion board for CS 105.
+					</p>
+					<p>
+						<ul>
+							<li>MP Questions</li>
+							<li>Lecture Questions</li>
+							<li>Q&amp;A Format</li>
+						</ul>
+					</p>
+				</section>
+
+				<section>
+					<h2>Course Materials</h2>
+					<p>
+						<b style="color: orange">i&gt;Clicker</b> (v2), for use in lecture
+					</p>
+					<p>
+						<b style="color: orange">Microsoft Excel</b>, v.2010 or newer
+					</p>
+					<p>
+						No textbook required
+					</p>
+				</section>
+
+				<section>
+					<h2>Proficiency Exam</h2>
+					<p>
+						Must sign up by Wednesday evening (11:00pm)<br>
+						[<a href="https://courses.engr.illinois.edu/cs105/proficiency.php">more details here</a>]
+					</p>
+				</section>
+
+
+				<section>
+					<h1>Algorithm</h1>
+				</section>
+
+				<section>
+					<h2>Algorithm</h2>
+					<p>
+						An <b style="color: orange">algorithm</b> is a step by step procedure of tasks to complete
+					</p>
+					<p class="fragment">
+						Every computer program has at least one algorithm
+					</p>
+				</section>
+
+				<section class="xl">
+					<p>How many people are in this room?</p>
+				</section>
+
+				<section>
+					<h3>Our First Algorithm</h3>
+					<ol>
+						<li class="fragment">Everyone starts with the number 1 in their heads</li>
+						<li class="fragment">Everyone stands up</li>
+						<li class="fragment">Find someone else who is standing</li>
+						<li class="fragment">Add your numbers together</li>
+						<li class="fragment">Agree on the new number</li>
+						<li class="fragment">Out of the two people:
+							<ul>
+								<li class="fragment">One person sits down</li>
+								<li class="fragment">The other person continues Steps 3-6 with the new number</li>
+							</ul>
+						</li>
+					</ol>
+				</section>
+
+				<section>
+					<p style="color: orange; font-weight: bold;">http://cs105.cs.illinois.edu/</p>
+					<p>(or just search &quot;CS 105&quot;)</p>
+				</section>
+
+
+			</div>
+
+		</div>
+
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: false,
+				history: false,
+				center: false,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				multiplex: {
+	        secret: '14403626911075695691',
+		      id: '90105acfc79f6cef',
+					url: 'https://edu-staging.cs.illinois.edu:8080/'
+		    },
+
+				classroom: {
+					secret: '14403632016913043716',
+		      id: '2bf23749c9281097',
+					url: 'https://edu-staging.cs.illinois.edu:8080/'
+				},
+
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'lib/revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'lib/revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'lib/revealjs/plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'lib/revealjs/plugin/zoom-js/zoom.js', async: true },
+					{ src: 'lib/revealjs/plugin/notes/notes.js', async: true },
+
+
+					// multiplex
+          { src: 'https://cdn.socket.io/socket.io-1.3.6.js', async: true },
+					{ src: 'lib/revealjs/plugin/multiplex/master.js', async: true },
+					{ src: 'lib/revealjs/plugin/multiplex/client.js', async: true },
+
+					// paper.js
+					{ src: 'js/classroom.js', async: true },
+				]
+			});
+		</script>
+
+	</body>
+</html>
